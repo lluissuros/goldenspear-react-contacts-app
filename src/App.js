@@ -1,24 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";
+import { AuthContext } from "./context/auth";
 
 function App(props) {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home Page</Link>
-          </li>
-          <li>
-            <Link to="/contacts">Contacts Page</Link>
-          </li>
-        </ul>
-        <Route exact path="/" component={Home} />
-        <Route path="/contacts" component={Contacts} />
-      </div>
-    </Router>
+    <AuthContext.Provider value={false}>
+      <Router>
+        <div>
+          <ul>...</ul>
+          <Route exact path="/" component={Home} />
+          <PrivateRoute path="/contacts" component={Contacts} />
+        </div>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
