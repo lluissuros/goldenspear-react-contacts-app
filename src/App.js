@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./pages/Home";
@@ -8,8 +8,15 @@ import Signup from "./pages/Signup";
 import { AuthContext } from "./context/auth";
 
 function App(props) {
+  const [authTokens, setAuthTokens] = useState();
+
+  const setTokens = data => {
+    localStorage.setItem("tokens", JSON.stringify(data)); // TODO: if 'remember me'
+    setAuthTokens(data);
+  };
+
   return (
-    <AuthContext.Provider value={false}>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
       <Router>
         <div>
           <ul>
