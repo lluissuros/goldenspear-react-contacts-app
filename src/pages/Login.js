@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import logoImg from "../img/logo.jpg";
+import logoImg from "../img/logo.jpeg";
 import {
   Card,
   Logo,
@@ -10,7 +10,7 @@ import {
   Error
 } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
-import { postLogin } from "../utils/api";
+import { postLogin, postLoginMock } from "../utils/api";
 
 function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -19,16 +19,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
 
-  function handleLogin() {
-    postLogin(userName, password)
+  const handleLogin = () => {
+    postLoginMock(userName, password)
       .then(result => {
         setAuthTokens(result.data);
         setLoggedIn(true);
       })
       .catch(e => {
+        console.error("TESTTTT");
         setIsError(true);
       });
-  }
+  };
 
   if (isLoggedIn) {
     return <Redirect to="/" />;
@@ -54,7 +55,7 @@ function Login() {
           }}
           placeholder="password"
         />
-        <Button onClick={handleLogin}>Sign In</Button>
+        <Button onClick={() => handleLogin()}>Sign In</Button>
       </Form>
       <Link to="/signup">Don't have an account?</Link>
       {isError && (
