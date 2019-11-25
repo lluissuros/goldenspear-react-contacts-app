@@ -23,9 +23,9 @@ function Login() {
     postLoginMock(userName, password)
       .then(result => {
         console.log("mock token returned", result);
-        setAuthTokens(result.data);
-        setLoggedIn(true);
+        setAuthTokens(result.tocken);
         setError(null);
+        setLoggedIn(true);
       })
       .catch(e => {
         setError(e.message);
