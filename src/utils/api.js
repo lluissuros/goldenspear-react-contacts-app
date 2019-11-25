@@ -1,4 +1,5 @@
 import axios from "axios";
+import mockUsers from "./mockUsers";
 
 const BASE_URL = "https://www.fake.com/";
 const MOCK_USER = "goldspear";
@@ -14,6 +15,21 @@ export function postLoginMock(userName, password) {
           "for mocked auth, use user: 'goldspear' and password: 'password' "
         )
       );
+    }
+  });
+}
+
+export function getUsersMock(tocken) {
+  // TODO: right now, only check if we have token or not, later backend would check
+  return new Promise((resolve, reject) => {
+    if (tocken) {
+      resolve({
+        json: () => {
+          return mockUsers;
+        }
+      });
+    } else {
+      reject("No token provided");
     }
   });
 }
