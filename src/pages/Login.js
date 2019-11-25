@@ -14,7 +14,7 @@ import { postLogin, postLoginMock } from "../utils/api";
 
 function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
@@ -22,12 +22,13 @@ function Login() {
   const handleLogin = () => {
     postLoginMock(userName, password)
       .then(result => {
+        console.log("mock token returned", result);
         setAuthTokens(result.data);
         setLoggedIn(true);
+        setError(null);
       })
       .catch(e => {
-        console.error("TESTTTT");
-        setIsError(true);
+        setError(e.message);
       });
   };
 
@@ -38,6 +39,7 @@ function Login() {
   return (
     <Card>
       <Logo src={logoImg} />
+      <p>Use user: goldspear and password: password</p>
       <Form>
         <Input
           type="username"
@@ -58,9 +60,7 @@ function Login() {
         <Button onClick={() => handleLogin()}>Sign In</Button>
       </Form>
       <Link to="/signup">Don't have an account?</Link>
-      {isError && (
-        <Error>The username or password provided were incorrect!</Error>
-      )}
+      {error && <Error>{`error message: ${error} `}</Error>}
     </Card>
   );
 }

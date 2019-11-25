@@ -1,13 +1,21 @@
 import axios from "axios";
 
 const BASE_URL = "https://www.fake.com/";
+const MOCK_USER = "goldspear";
+const MOCK_PASSWORD = "password";
 
 export function postLoginMock(userName, password) {
-  if (userName === "lluis" && password === "pass") {
-    console.log("mock token returned");
-    return { data: "myMockToken" };
-  }
-  throw new Error(getErrorMsg(userName));
+  return new Promise((resolve, reject) => {
+    if (userName === MOCK_USER && password === MOCK_PASSWORD) {
+      resolve({ tocken: "myMockToken" });
+    } else {
+      reject(
+        new Error(
+          "for mocked auth, use user: 'goldspear' and password: 'password' "
+        )
+      );
+    }
+  });
 }
 
 export function postLogin(userName, password) {
