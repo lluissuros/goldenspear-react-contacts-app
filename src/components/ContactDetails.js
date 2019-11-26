@@ -1,9 +1,9 @@
 import React from "react";
 
-const ContactsDetails = ({ contactName, contactList, onContactClick }) => {
+const ContactsDetails = ({ contact }) => {
   return (
     <div>
-      <span>Contact Details</span>
+      <span>{contact && contact.name}</span>
     </div>
   );
 };

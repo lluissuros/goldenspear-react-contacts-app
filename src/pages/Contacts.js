@@ -21,10 +21,12 @@ const RightItem = styled.div`
 
 const Contacts = props => {
   const [hasError, setErrors] = useState(false);
-  const [contacts, setContacts] = useState({});
+  const [contacts, setContacts] = useState(null);
+  const [selectedContact, setSelectedContact] = useState(null);
+
   const { authTokens } = useAuth();
 
-  async function fetchData(authTokens) {
+  async function fetchData() {
     try {
       //   const res = await getUsersMock(authTokens);
       console.warn("TODO we are providing mock tocken for development");
@@ -36,25 +38,29 @@ const Contacts = props => {
   }
 
   useEffect(() => {
-    fetchData(authTokens);
-  });
+    fetchData();
+  }, []);
 
-  const onLetterClick = letter => {
-    console.log(letter);
+  const handleSelectedContact = contact => {
+    console.log(contact, "was selected");
+    setSelectedContact(contact);
   };
 
   return (
     <div>
-      {/* <span>{JSON.stringify(contacts)}</span> */}
       <Container>
         <LeftItem>
-          <ContactsBrowser onLetterClick={onLetterClick}></ContactsBrowser>
+          {contacts && (
+            <ContactsBrowser
+              contacts={contacts}
+              onSelectedContact={handleSelectedContact}
+            ></ContactsBrowser>
+          )}
         </LeftItem>
         <RightItem>
-          <ContactDetails></ContactDetails>
+          <ContactDetails contact={selectedContact}></ContactDetails>
         </RightItem>
       </Container>
-      <hr />
       {/* <span>Has error: {JSON.stringify(hasError)}</span> */}
     </div>
   );

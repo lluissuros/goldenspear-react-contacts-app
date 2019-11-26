@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Paginator from "./Paginator";
 
+const PAGE_SIZE = 20;
 const LETTERS = [
   "A",
   "B",
@@ -36,7 +38,7 @@ const FlexContainer = styled.div`
   width: 100%;
 `;
 
-const FlexEndContainer = styled.div`
+const FlexSpaceBetweenContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -63,7 +65,7 @@ const LetterButton = styled.button`
 `;
 
 const LettersList = ({ onLetterClick }) => (
-  <div>
+  <div style={{ margin: "0px 12px 0px 3px" }}>
     {LETTERS.map(letter => (
       <LetterButton key={letter} onClick={() => onLetterClick(letter)}>
         {letter}
@@ -72,21 +74,58 @@ const LettersList = ({ onLetterClick }) => (
   </div>
 );
 
-const ContactsBrowser = ({
-  filteredContacts,
-  onSearchInput,
-  onLetterClick,
-  onPaginationClick
-}) => {
+const ContactsBrowser = ({ contacts, onSelectedContact }) => {
+  const [browserPage, setBrowserPage] = useState(0);
+  const [filteredContacts, setFilteredContacts] = useState(contacts);
+
+  const paginate = (elements, page, pageSize = PAGE_SIZE) => {
+    return elements.slice(page * pageSize, page * pageSize + pageSize);
+  };
+
+  const handleLetterClick = letter => {
+    setBrowserPage(0);
+    const alphabeticallyByLetter = contacts
+      .filter(contact =>
+        contact.name.toLowerCase().startsWith(letter.toLowerCase())
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    console.log(alphabeticallyByLetter.length, "lenght");
+    setFilteredContacts(alphabeticallyByLetter);
+  };
+
+  const handlePaginator = direction => {
+    if (direction === "forward") {
+      const maxPage = Math.floor(filteredContacts.length / PAGE_SIZE);
+      setBrowserPage(Math.min(browserPage + 1, maxPage));
+    } else {
+      setBrowserPage(Math.max(browserPage - 1, 0));
+    }
+  };
+
+  const onPaginationClick = () => {};
+  const onSearchInput = () => {};
+
   return (
     <div>
       <div>Search Input</div>
       <FlexContainer>
-        <LettersList onLetterClick={onLetterClick} />
-        <FlexEndContainer>
-          <div>Filtered Clikcable List of Contacts</div>
-          <div>Pagination</div>
-        </FlexEndContainer>
+        <LettersList onLetterClick={handleLetterClick} />
+        <FlexSpaceBetweenContainer>
+          <div>
+            {paginate(filteredContacts, browserPage).map(contact => (
+              <div key={contact.id} onClick={() => onSelectedContact(contact)}>
+                {contact.name}
+              </div>
+            ))}
+          </div>
+          <Paginator
+            currentPage={browserPage + 1}
+            totalPages={Math.ceil(filteredContacts.length / PAGE_SIZE)}
+            onForward={() => handlePaginator("forward")}
+            onBackWards={() => handlePaginator("backwards")}
+          />
+        </FlexSpaceBetweenContainer>
       </FlexContainer>
     </div>
   );
