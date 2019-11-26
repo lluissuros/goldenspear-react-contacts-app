@@ -33,7 +33,8 @@ function App(props) {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <PrivateRoute path="/contacts" component={Contacts} />
+          <Route path="/contacts" component={Contacts} />
+          {/* <PrivateRoute path="/contacts" component={Contacts} /> */}
         </div>
       </Router>
     </AuthContext.Provider>

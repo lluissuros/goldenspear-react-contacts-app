@@ -8,7 +8,7 @@ import {
   Input,
   Button,
   Error
-} from "../components/AuthForms";
+} from "../components/StyledComponents";
 import { useAuth } from "../context/auth";
 import { postLogin, postLoginMock } from "../utils/api";
 
