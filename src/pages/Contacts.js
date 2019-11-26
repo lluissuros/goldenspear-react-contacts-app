@@ -39,12 +39,16 @@ const Contacts = props => {
     fetchData(authTokens);
   });
 
+  const onLetterClick = letter => {
+    console.log(letter);
+  };
+
   return (
     <div>
       {/* <span>{JSON.stringify(contacts)}</span> */}
       <Container>
         <LeftItem>
-          <ContactsBrowser></ContactsBrowser>
+          <ContactsBrowser onLetterClick={onLetterClick}></ContactsBrowser>
         </LeftItem>
         <RightItem>
           <ContactDetails></ContactDetails>
