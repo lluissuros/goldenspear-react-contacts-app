@@ -59,7 +59,7 @@ const ConnectionCardItem = styled.li`
   list-style-type: none;
   display: flex;
   align-items: center;
-  margin: 3px;
+  margin: 12px;
   border-radius: 3px;
   border: solid 1px #ff980073;
   background-color: #ffeb3b45;
@@ -114,6 +114,10 @@ const ContactDetails = ({ contact, connections }) => {
         </div>
       </Header>
 
+      <div>
+        <hr />
+      </div>
+
       <section>
         <ConnectionsListContainer>
           {filteredConnections &&
@@ -127,6 +131,10 @@ const ContactDetails = ({ contact, connections }) => {
             )}
         </ConnectionsListContainer>
       </section>
+
+      <div>
+        <hr />
+      </div>
 
       <footer>
         <Paginator
