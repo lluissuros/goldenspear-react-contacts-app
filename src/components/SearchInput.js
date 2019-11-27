@@ -9,7 +9,7 @@ const SearchInput = ({ onInputChange }) => {
 
   return (
     <React.Fragment>
-      <form style={{ margin: "6px" }}>
+      <form>
         <label htmlFor="search">Search:</label>
         <input
           type="text"

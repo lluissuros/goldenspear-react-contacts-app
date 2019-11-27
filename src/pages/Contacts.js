@@ -13,16 +13,22 @@ const Container = styled.div`
 
 const LeftItem = styled.div`
   width: 30%;
+  max-width: 250px;
+  margin: 0px 6px 0px 6px;
 `;
 
 const RightItem = styled.div`
   width: 70%;
+  margin: 0px 12px 0px 12px;
 `;
 
 const Contacts = props => {
   const [hasError, setErrors] = useState(false);
   const [contacts, setContacts] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContactConnections, setSelectedContactConnections] = useState(
+    null
+  );
 
   const { authTokens } = useAuth();
 
@@ -44,6 +50,11 @@ const Contacts = props => {
   const handleSelectedContact = contact => {
     console.log(contact, "was selected");
     setSelectedContact(contact);
+    const contactConnectionsIds = new Set(contact.connections);
+    const connections = contacts.filter(contact =>
+      contactConnectionsIds.has(contact.id)
+    );
+    setSelectedContactConnections(connections);
   };
 
   return (
@@ -58,7 +69,12 @@ const Contacts = props => {
           )}
         </LeftItem>
         <RightItem>
-          <ContactDetails contact={selectedContact}></ContactDetails>
+          {selectedContact && (
+            <ContactDetails
+              contact={selectedContact}
+              connections={selectedContactConnections}
+            ></ContactDetails>
+          )}
         </RightItem>
       </Container>
       {/* <span>Has error: {JSON.stringify(hasError)}</span> */}

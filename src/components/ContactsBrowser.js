@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Paginator from "./Paginator";
 import SearchInput from "./SearchInput";
+import { paginate } from "../utils/helpers";
 
 const PAGE_SIZE = 50;
 const LETTERS = [
@@ -103,10 +104,6 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
   const [browserPage, setBrowserPage] = useState(0);
   const [filteredContacts, setFilteredContacts] = useState(contacts);
 
-  const paginate = (elements, page, pageSize = PAGE_SIZE) => {
-    return elements.slice(page * pageSize, page * pageSize + pageSize);
-  };
-
   const handleSearch = searchValue => {
     setBrowserPage(0);
     const alphabeticallyBySearch = contacts
@@ -143,7 +140,7 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>
           <ScrollContainer>
-            {paginate(filteredContacts, browserPage).map(contact => (
+            {paginate(filteredContacts, browserPage, PAGE_SIZE).map(contact => (
               <ContactLink
                 key={contact.id}
                 onClick={() => onSelectedContact(contact)}
