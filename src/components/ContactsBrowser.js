@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Paginator from "./Paginator";
+import SearchInput from "./SearchInput";
 
 const PAGE_SIZE = 50;
 const LETTERS = [
@@ -95,6 +96,16 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
     return elements.slice(page * pageSize, page * pageSize + pageSize);
   };
 
+  const handleSearch = searchValue => {
+    setBrowserPage(0);
+    const alphabeticallyBySearch = contacts
+      .filter(contact =>
+        contact.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setFilteredContacts(alphabeticallyBySearch);
+  };
+
   const handleLetterClick = letter => {
     setBrowserPage(0);
     const alphabeticallyByLetter = contacts
@@ -102,8 +113,6 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
         contact.name.toLowerCase().startsWith(letter.toLowerCase())
       )
       .sort((a, b) => a.name.localeCompare(b.name));
-
-    console.log(alphabeticallyByLetter.length, "lenght");
     setFilteredContacts(alphabeticallyByLetter);
   };
 
@@ -116,12 +125,9 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
     }
   };
 
-  const onPaginationClick = () => {};
-  const onSearchInput = () => {};
-
   return (
     <div>
-      <div>Search Input</div>
+      <SearchInput onInputChange={handleSearch}></SearchInput>
       <FlexContainer>
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>

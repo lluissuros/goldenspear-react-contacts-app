@@ -19,7 +19,13 @@ function App(props) {
     <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
       <Router>
         <div>
-          <ul>
+          <ul
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around"
+            }}
+          >
             <li>
               <Link to="/">Home Page</Link>
             </li>
