@@ -66,6 +66,17 @@ const LetterButton = styled.button`
   }
 `;
 
+const ContactLink = styled.div`
+  :hover {
+    cursor: pointer;
+    background-color: #ffeb3b7d;
+    font-weight: 700;
+  }
+  :focus {
+    outline: none;
+  }
+`;
+
 const LetterContainer = styled.div`
   margin: 0px 12px 0px 3px;
   display: flex;
@@ -126,16 +137,19 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <SearchInput onInputChange={handleSearch}></SearchInput>
       <FlexContainer>
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>
           <ScrollContainer>
             {paginate(filteredContacts, browserPage).map(contact => (
-              <div key={contact.id} onClick={() => onSelectedContact(contact)}>
+              <ContactLink
+                key={contact.id}
+                onClick={() => onSelectedContact(contact)}
+              >
                 {contact.name}
-              </div>
+              </ContactLink>
             ))}
           </ScrollContainer>
           <Paginator
@@ -146,7 +160,7 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
           />
         </FlexSpaceBetweenContainer>
       </FlexContainer>
-    </div>
+    </React.Fragment>
   );
 };
 
