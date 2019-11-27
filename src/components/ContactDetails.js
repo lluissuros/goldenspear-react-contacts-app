@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import SearchInput from "./SearchInput";
@@ -40,7 +40,7 @@ const ConnectionsListContainer = styled.ul`
   padding: 0px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 12px;
   font-weight: 300;
   text-align: center;
@@ -74,13 +74,29 @@ const ContactTitle = ({ contact }) => (
 
 const ContactDetails = ({ contact, connections }) => {
   const [browserPage, setBrowserPage] = useState(0);
-  const handleSearch = value => {
-    console.log("search for ", value);
+  const [filteredConnections, setFilteredConnections] = useState(connections);
+
+  useEffect(() => {
+    setFilteredConnections(connections);
+  }, [connections]);
+
+  const handleSearch = searchValue => {
+    setBrowserPage(0);
+    if (searchValue === "") {
+      setFilteredConnections(connections);
+      return;
+    }
+    const alphabeticallyBySearch = connections
+      .filter(contact =>
+        contact.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setFilteredConnections(alphabeticallyBySearch);
   };
 
   const handlePaginator = direction => {
     if (direction === "forward") {
-      const maxPage = Math.floor(connections.length / PAGE_SIZE);
+      const maxPage = Math.floor(filteredConnections.length / PAGE_SIZE);
       setBrowserPage(Math.min(browserPage + 1, maxPage));
     } else {
       setBrowserPage(Math.max(browserPage - 1, 0));
@@ -100,20 +116,22 @@ const ContactDetails = ({ contact, connections }) => {
 
       <section>
         <ConnectionsListContainer>
-          {connections &&
-            paginate(connections, browserPage, PAGE_SIZE).map(connection => (
-              <ConnectionCardItem key={connection.id}>
-                <ConnectionAvatar src={connection.avatar}></ConnectionAvatar>
-                <div>{connection.name}</div>
-              </ConnectionCardItem>
-            ))}
+          {filteredConnections &&
+            paginate(filteredConnections, browserPage, PAGE_SIZE).map(
+              connection => (
+                <ConnectionCardItem key={connection.id}>
+                  <ConnectionAvatar src={connection.avatar}></ConnectionAvatar>
+                  <div>{connection.name}</div>
+                </ConnectionCardItem>
+              )
+            )}
         </ConnectionsListContainer>
       </section>
 
       <footer>
         <Paginator
           currentPage={browserPage + 1}
-          totalPages={Math.ceil(connections.length / PAGE_SIZE)}
+          totalPages={Math.ceil(filteredConnections.length / PAGE_SIZE)}
           onForward={() => handlePaginator("forward")}
           onBackWards={() => handlePaginator("backwards")}
         />

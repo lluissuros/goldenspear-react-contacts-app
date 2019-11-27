@@ -51,9 +51,9 @@ const Contacts = props => {
     console.log(contact, "was selected");
     setSelectedContact(contact);
     const contactConnectionsIds = new Set(contact.connections);
-    const connections = contacts.filter(contact =>
-      contactConnectionsIds.has(contact.id)
-    );
+    const connections = contacts
+      .filter(contact => contactConnectionsIds.has(contact.id))
+      .sort((a, b) => a.name.localeCompare(b.name));
     setSelectedContactConnections(connections);
   };
 
