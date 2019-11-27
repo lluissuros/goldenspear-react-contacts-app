@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Paginator from "./Paginator";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 50;
 const LETTERS = [
   "A",
   "B",
@@ -34,6 +34,7 @@ const LETTERS = [
 
 const FlexContainer = styled.div`
   display: flex;
+  height: 500px;
   flex-direction: row;
   width: 100%;
 `;
@@ -64,14 +65,26 @@ const LetterButton = styled.button`
   }
 `;
 
+const LetterContainer = styled.div`
+  margin: 0px 12px 0px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
+const ScrollContainer = styled.div`
+  height: 470px;
+  overflow-y: scroll;
+`;
+
 const LettersList = ({ onLetterClick }) => (
-  <div style={{ margin: "0px 12px 0px 3px" }}>
+  <LetterContainer>
     {LETTERS.map(letter => (
       <LetterButton key={letter} onClick={() => onLetterClick(letter)}>
         {letter}
       </LetterButton>
     ))}
-  </div>
+  </LetterContainer>
 );
 
 const ContactsBrowser = ({ contacts, onSelectedContact }) => {
@@ -112,13 +125,13 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
       <FlexContainer>
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>
-          <div>
+          <ScrollContainer>
             {paginate(filteredContacts, browserPage).map(contact => (
               <div key={contact.id} onClick={() => onSelectedContact(contact)}>
                 {contact.name}
               </div>
             ))}
-          </div>
+          </ScrollContainer>
           <Paginator
             currentPage={browserPage + 1}
             totalPages={Math.ceil(filteredContacts.length / PAGE_SIZE)}
