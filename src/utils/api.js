@@ -2,8 +2,8 @@ import axios from "axios";
 import mockUsers from "./mockUsers";
 
 const BASE_URL = "https://www.fake.com/";
-const MOCK_USER = "goldspear";
-const MOCK_PASSWORD = "password";
+const MOCK_USER = "golden";
+const MOCK_PASSWORD = "pass";
 
 export function postLoginMock(userName, password) {
   return new Promise((resolve, reject) => {
@@ -12,7 +12,7 @@ export function postLoginMock(userName, password) {
     } else {
       reject(
         new Error(
-          "for mocked auth, use user: 'goldspear' and password: 'password' "
+          `for mocked auth, use user: ${MOCK_USER} and password: ${MOCK_PASSWORD}`
         )
       );
     }

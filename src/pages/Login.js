@@ -10,7 +10,7 @@ import {
   Error
 } from "../components/StyledComponents";
 import { useAuth } from "../context/auth";
-import { postLogin, postLoginMock } from "../utils/api";
+import { postLoginMock } from "../utils/api"; //TODO: use postLogin later
 
 function Login() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -33,13 +33,13 @@ function Login() {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to="/contacts" />;
   }
 
   return (
     <Card>
       <Logo src={logoImg} />
-      <p>Use user: goldspear and password: password</p>
+      <p>Use user: golden and password: pass</p>
       <Form>
         <Input
           type="username"

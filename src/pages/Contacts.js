@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { getUsersMock } from "../utils/api";
 import { useAuth } from "../context/auth";
 import ContactDetails from "../components/ContactDetails";
 import ContactsBrowser from "../components/ContactsBrowser";
-import styled from "styled-components";
+import { Error } from "../components/StyledComponents";
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +25,7 @@ const RightItem = styled.div`
 `;
 
 const Contacts = props => {
-  const [hasError, setErrors] = useState(false);
+  const [error, setError] = useState(false);
   const [contacts, setContacts] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
   const [selectedContactConnections, setSelectedContactConnections] = useState(
@@ -32,23 +34,20 @@ const Contacts = props => {
 
   const { authTokens } = useAuth();
 
-  async function fetchData() {
-    try {
-      //   const res = await getUsersMock(authTokens);
-      console.warn("TODO we are providing mock tocken for development");
-      const res = await getUsersMock("mock");
-      setContacts(res.json());
-    } catch (err) {
-      setErrors(err);
-    }
-  }
-
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getUsersMock(authTokens);
+        console.warn("TODO we are providing mock tocken for development");
+        setContacts(res.json());
+      } catch (err) {
+        setError(err);
+      }
+    }
     fetchData();
-  }, []);
+  }, [authTokens]);
 
   const handleSelectedContact = contact => {
-    console.log(contact, "was selected");
     setSelectedContact(contact);
     const contactConnectionsIds = new Set(contact.connections);
     const connections = contacts
@@ -77,7 +76,12 @@ const Contacts = props => {
           )}
         </RightItem>
       </Container>
-      {/* <span>Has error: {JSON.stringify(hasError)}</span> */}
+      {error && (
+        <div>
+          <Error>{`error message: ${error} `}</Error>
+          <Link to="/">Home Page</Link>
+        </div>
+      )}
     </div>
   );
 };
