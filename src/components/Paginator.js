@@ -1,24 +1,24 @@
 import React from "react";
-import styled from "styled-components";
+import { SmallButton } from "./StyledComponents";
 
 const Paginator = ({ onForward, onBackWards, currentPage, totalPages }) => {
   return (
     <div>
-      <button
+      <SmallButton
         onClick={() => {
           onBackWards();
         }}
       >
         {"<"}
-      </button>
+      </SmallButton>
       {`${currentPage} / ${totalPages}`}
-      <button
+      <SmallButton
         onClick={() => {
           onForward();
         }}
       >
         {">"}
-      </button>
+      </SmallButton>
     </div>
   );
 };

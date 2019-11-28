@@ -45,7 +45,7 @@ const ConnectionsListContainer = styled.ul`
   font-size: 12px;
   font-weight: 300;
   text-align: center;
-  height: 400px;
+  height: 370px;
   overflow-y: scroll;
 `;
 
@@ -55,12 +55,13 @@ const ConnectionCardItem = styled.li`
   padding: 6px;
   justify-content: space-between;
   width: 15%;
-  min-width: 75px;
+  min-width: 70px;
+  max-width: 85px;
   height: 80px;
   list-style-type: none;
   display: flex;
   align-items: center;
-  margin: 12px;
+  margin: 6px;
   border-radius: 3px;
   border: solid 1px #ff980073;
   background-color: #ffeb3b45;
@@ -136,11 +137,10 @@ const ContactDetails = ({ contact, connections }) => {
         </ConnectionsListContainer>
       </section>
 
-      <div>
-        <hr />
-      </div>
-
       <footer>
+        <div>
+          <hr />
+        </div>
         <Paginator
           currentPage={browserPage + 1}
           totalPages={Math.ceil(filteredConnections.length / PAGE_SIZE)}

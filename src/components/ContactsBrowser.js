@@ -7,7 +7,9 @@ import { paginate } from "../utils/helpers";
 
 const PAGE_SIZE = 50;
 
-const FlexContainer = styled.div`
+const FlexContainer = styled.section`
+  padding-top: 10px;
+  box-sizing: border-box;
   display: flex;
   height: 500px;
   flex-direction: row;
@@ -74,9 +76,11 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
   return (
     <React.Fragment>
       <SearchInput
+        style={{ marginBottom: "11px" }}
         searchValue={searchValue}
         onInputChange={handleSearch}
       ></SearchInput>
+
       <FlexContainer>
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>
@@ -90,6 +94,11 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
               </ContactLink>
             ))}
           </ScrollContainer>
+
+          <div>
+            <hr />
+          </div>
+
           <Paginator
             currentPage={browserPage + 1}
             totalPages={Math.ceil(filteredContacts.length / PAGE_SIZE)}

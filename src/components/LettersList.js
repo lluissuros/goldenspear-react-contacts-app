@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { SmallButton } from "./StyledComponents";
 
 const LETTERS = [
   "A",
@@ -37,32 +38,12 @@ const LetterContainer = styled.div`
   justify-content: space-around;
 `;
 
-const LetterButton = styled.button`
-  background: linear-gradient(to bottom, #ff9800, #ffc1074a);
-  display: block;
-  border-color: none;
-  border-radius: 3px;
-  width: 24px;
-  height: 18px;
-  color: black;
-  font-weight: 700;
-  font-size: 0.8rem;
-  border: none;
-  :hover {
-    cursor: pointer;
-    background-color: #ff5722;
-  }
-  :focus {
-    outline: none;
-  }
-`;
-
 const LettersList = ({ onLetterClick }) => (
   <LetterContainer>
     {LETTERS.map(letter => (
-      <LetterButton key={letter} onClick={() => onLetterClick(letter)}>
+      <SmallButton key={letter} onClick={() => onLetterClick(letter)}>
         {letter}
-      </LetterButton>
+      </SmallButton>
     ))}
   </LetterContainer>
 );

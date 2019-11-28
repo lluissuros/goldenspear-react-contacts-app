@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./pages/Home";
 import Contacts from "./pages/Contacts";

@@ -35,6 +35,25 @@ const Button = styled.button`
   font-size: 0.8rem;
 `;
 
+const SmallButton = styled.button`
+  background: linear-gradient(to bottom, #ff9800, #ffc1074a);
+  border-color: none;
+  border-radius: 3px;
+  width: 24px;
+  height: 18px;
+  color: black;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: none;
+  :hover {
+    cursor: pointer;
+    background-color: #ff5722;
+  }
+  :focus {
+    outline: none;
+  }
+`;
+
 const Logo = styled.img`
   width: 50%;
   margin-bottom: 1rem;
@@ -47,4 +66,4 @@ const Error = styled.div`
   border-radius: 4px;
 `;
 
-export { Form, Input, Button, Logo, Card, Error };
+export { Form, Input, Button, SmallButton, Logo, Card, Error };
