@@ -8,6 +8,7 @@ import ContactsBrowser from "../components/ContactsBrowser";
 import { Error } from "../components/StyledComponents";
 
 const Container = styled.div`
+  margin: 24px auto;
   display: flex;
   flex-direction: row;
   width: 100%;

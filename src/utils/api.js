@@ -8,6 +8,9 @@ const MOCK_PASSWORD = "pass";
 export function postLoginMock(userName, password) {
   return new Promise((resolve, reject) => {
     if (userName === MOCK_USER && password === MOCK_PASSWORD) {
+      console.warn(
+        "TODO: right now providing a mock tocken from the mock api call"
+      );
       resolve({ tocken: "myMockToken" });
     } else {
       reject(
