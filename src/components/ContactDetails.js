@@ -19,6 +19,7 @@ const Avatar = styled.img`
 `;
 
 const ConnectionAvatar = styled.img`
+  background-color: red;
   height: 70%;
   border-radius: 50%;
 `;
@@ -75,13 +76,16 @@ const ContactTitle = ({ contact }) => (
 const ContactDetails = ({ contact, connections }) => {
   const [browserPage, setBrowserPage] = useState(0);
   const [filteredConnections, setFilteredConnections] = useState(connections);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setFilteredConnections(connections);
+    setSearchValue("");
   }, [connections]);
 
   const handleSearch = searchValue => {
     setBrowserPage(0);
+    setSearchValue(searchValue);
     if (searchValue === "") {
       setFilteredConnections(connections);
       return;
@@ -110,7 +114,7 @@ const ContactDetails = ({ contact, connections }) => {
           {contact && <ContactTitle contact={contact} />}
         </div>
         <div style={{ lineHeight: "3em" }}>
-          <SearchInput onInputChange={handleSearch} />
+          <SearchInput searchValue={searchValue} onInputChange={handleSearch} />
         </div>
       </Header>
 

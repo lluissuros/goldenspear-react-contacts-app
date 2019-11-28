@@ -39,9 +39,11 @@ const ScrollContainer = styled.div`
 const ContactsBrowser = ({ contacts, onSelectedContact }) => {
   const [browserPage, setBrowserPage] = useState(0);
   const [filteredContacts, setFilteredContacts] = useState(contacts);
+  const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = searchValue => {
     setBrowserPage(0);
+    setSearchValue(searchValue);
     const alphabeticallyBySearch = contacts
       .filter(contact =>
         contact.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -71,7 +73,10 @@ const ContactsBrowser = ({ contacts, onSelectedContact }) => {
 
   return (
     <React.Fragment>
-      <SearchInput onInputChange={handleSearch}></SearchInput>
+      <SearchInput
+        searchValue={searchValue}
+        onInputChange={handleSearch}
+      ></SearchInput>
       <FlexContainer>
         <LettersList onLetterClick={handleLetterClick} />
         <FlexSpaceBetweenContainer>
