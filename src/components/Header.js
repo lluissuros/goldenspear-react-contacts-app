@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
+const Container = styled.header`
   margin: 0px 12px 0px 3px;
   display: flex;
   justify-content: space-around;

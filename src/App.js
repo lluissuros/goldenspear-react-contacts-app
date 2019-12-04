@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import Contacts from "./pages/Contacts";
@@ -27,25 +27,33 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div>
-        <Header
-          onLogout={handleLogout}
-          username={tokenConfirm && tokenConfirm.username}
-        ></Header>
-        <Route exact path="/" component={Login} />
+    <React.Fragment>
+      <Header
+        onLogout={handleLogout}
+        username={tokenConfirm && tokenConfirm.username}
+      ></Header>
 
-        <Route
-          path="/login"
-          render={props => (
-            <Login onLoginSuccess={handleTokenUpdate} {...props} />
-          )}
-        />
-
-        <Route path="/signup" component={Signup} />
-        <PrivateRoute path="/contacts" component={Contacts} />
-      </div>
-    </Router>
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route
+              path="/login"
+              render={props => (
+                <Login onLoginSuccess={handleTokenUpdate} {...props} />
+              )}
+            />
+            <Route path="/signup" component={Signup} />
+            <PrivateRoute path="/contacts" component={Contacts} />
+            <Route
+              render={props => (
+                <Login onLoginSuccess={handleTokenUpdate} {...props} />
+              )}
+            />
+          </Switch>
+        </div>
+      </Router>
+    </React.Fragment>
   );
 }
 
