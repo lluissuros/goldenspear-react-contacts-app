@@ -57,6 +57,7 @@ const SmallButton = styled.button`
 const Logo = styled.img`
   width: 50%;
   margin-bottom: 1rem;
+  border-radius: 6px;
 `;
 
 const Error = styled.div`
