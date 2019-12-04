@@ -1,25 +1,50 @@
-import axios from "axios";
 import mockUsers from "./mockUsers";
 
-const BASE_URL = "https://www.fake.com/";
-const MOCK_USER = "golden";
-const MOCK_PASSWORD = "pass";
+const BASE_URL = "http://localhost:3001";
+const LOGIN_URL = `${BASE_URL}/users/login`;
+const SIGNUP_URL = `${BASE_URL}/users/signup`;
+const CONTACTS_URL = `${BASE_URL}/constacts`;
 
-export function postLoginMock(userName, password) {
-  return new Promise((resolve, reject) => {
-    if (userName === MOCK_USER && password === MOCK_PASSWORD) {
-      console.warn(
-        "TODO: right now providing a mock tocken from the mock api call"
-      );
-      resolve({ tocken: "myMockToken" });
-    } else {
-      reject(
-        new Error(
-          `for mocked auth, use user: ${MOCK_USER} and password: ${MOCK_PASSWORD}`
-        )
-      );
-    }
+export function login(username, password) {
+  // Get a token from api server using the fetch api
+  return makeAuthenticatedRequest(LOGIN_URL, null, {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      password
+    })
   });
+}
+
+function makeAuthenticatedRequest(url, token, options) {
+  // performs api calls sending the required authentication headers
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json"
+  };
+
+  // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
+  if (token) {
+    headers["Authorization"] = "Bearer " + token;
+  }
+
+  return fetch(url, {
+    headers,
+    ...options
+  })
+    .then(checkStatus)
+    .then(response => response.json());
+}
+
+function checkStatus(response) {
+  console.log("check status", response);
+  // raises an error in case response status is not a success
+  if (response.status >= 200 && response.status < 300) {
+    // Success status lies between 200 to 300
+    return response;
+  } else {
+    throw new Error(response.statusText);
+  }
 }
 
 export function getUsersMock(tocken) {
@@ -35,26 +60,4 @@ export function getUsersMock(tocken) {
       reject("No token provided");
     }
   });
-}
-
-export function postLogin(userName, password) {
-  axios
-    .post(`${BASE_URL}/auth/login`, {
-      userName,
-      password
-    })
-    .then(result => {
-      if (result.status === 200) {
-        return result;
-      } else {
-        throw new Error(getErrorMsg(userName));
-      }
-    })
-    .catch(e => {
-      throw new Error(getErrorMsg(userName, `error message was ${e}`));
-    });
-}
-
-function getErrorMsg(username, otherInfo = "") {
-  return `${username} doesn't exist ${otherInfo}`;
 }
