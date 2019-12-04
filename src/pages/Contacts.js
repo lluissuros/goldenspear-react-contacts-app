@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { getUsersMock } from "../utils/api";
-import { useAuth } from "../context/auth";
 import ContactDetails from "../components/ContactDetails";
 import ContactsBrowser from "../components/ContactsBrowser";
 import { Error } from "../components/StyledComponents";
@@ -33,12 +32,11 @@ const Contacts = props => {
     null
   );
 
-  const { authTokens } = useAuth();
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await getUsersMock(authTokens);
+        const tocken = "MOCK TOCKEN GET IT FROM AUTH";
+        const res = await getUsersMock(tocken);
         console.warn("TODO we are providing mock tocken for development");
         setContacts(res.json());
       } catch (err) {
@@ -46,7 +44,7 @@ const Contacts = props => {
       }
     }
     fetchData();
-  }, [authTokens]);
+  }, []);
 
   const handleSelectedContact = contact => {
     setSelectedContact(contact);

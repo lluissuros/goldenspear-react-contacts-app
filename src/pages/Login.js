@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import logoImg from "../img/logo.jpeg";
+import logoImg from "../img/logo_goldenspear.jpg";
 import {
   Card,
   Logo,
@@ -9,37 +9,40 @@ import {
   Button,
   Error
 } from "../components/StyledComponents";
-import { useAuth } from "../context/auth";
-import { postLoginMock } from "../utils/api"; //TODO: use postLogin later
+import { login } from "../utils/api"; //TODO: use postLogin later
+import { setToken } from "../utils/AuthHelperMethods";
 
-function Login() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+function Login({ onLoginSuccess }) {
   const [error, setError] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuthTokens } = useAuth();
 
   const handleLogin = () => {
-    postLoginMock(userName, password)
-      .then(result => {
-        console.log("mock token returned", result);
-        setAuthTokens(result.tocken);
+    /* Here is where all the login logic will go. Upon clicking the login button, we would like to utilize a login method that will send our entered credentials over to the server for verification. Once verified, it should store your token and send you to the protected route. */
+    login(userName, password)
+      .then(res => {
+        if (!res.token) {
+          throw new Error("token was not received");
+        }
+        setToken(res.token);
         setError(null);
         setLoggedIn(true);
+        onLoginSuccess();
       })
       .catch(e => {
         setError(e.message);
       });
   };
 
-  if (isLoggedIn) {
+  if (loggedIn) {
+    debugger;
     return <Redirect to="/contacts" />;
   }
 
   return (
     <Card>
       <Logo src={logoImg} />
-      <p>Use user: golden and password: pass</p>
       <Form>
         <Input
           type="username"
@@ -57,7 +60,8 @@ function Login() {
           }}
           placeholder="password"
         />
-        <Button onClick={() => handleLogin()}>Sign In</Button>
+        <Button onClick={() => handleLogin()}>Log In</Button>
+        <Button onClick={() => console.log("TODO")}>Remember Me</Button>
       </Form>
       <Link to="/signup">Don't have an account?</Link>
       {error && <Error>{`error message: ${error} `}</Error>}

@@ -28,23 +28,23 @@ function makeAuthenticatedRequest(url, token, options) {
     headers["Authorization"] = "Bearer " + token;
   }
 
-  return fetch(url, {
-    headers,
-    ...options
-  })
-    .then(checkStatus)
-    .then(response => response.json());
-}
-
-function checkStatus(response) {
-  console.log("check status", response);
-  // raises an error in case response status is not a success
-  if (response.status >= 200 && response.status < 300) {
-    // Success status lies between 200 to 300
-    return response;
-  } else {
-    throw new Error(response.statusText);
-  }
+  return (
+    fetch(url, {
+      headers,
+      ...options
+    })
+      // .then(checkStatus)
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.err) {
+          throw new Error(responseData.err);
+        }
+        return responseData;
+      })
+      .catch(e => {
+        throw new Error(e.message);
+      })
+  );
 }
 
 export function getUsersMock(tocken) {

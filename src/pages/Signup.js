@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoImg from "../img/logo.jpeg";
+import logoImg from "../img/logo_goldenspear.jpg";
 import {
   Card,
   Logo,

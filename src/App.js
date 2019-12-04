@@ -1,29 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
-import { AuthContext } from "./context/auth";
+import Signup from "./pages/Signup";
+import Header from "./components/Header";
+import { logout, getConfirm } from "./utils/AuthHelperMethods";
 
-function App(props) {
-  const [authTokens, setAuthTokens] = useState();
+function App() {
+  const [tokenConfirm, setTokenConfirm] = useState(null);
 
-  const setTokens = data => {
-    localStorage.setItem("tokens", JSON.stringify(data)); // TODO: if 'remember me'
-    setAuthTokens(data);
+  const handleTokenUpdate = () => {
+    setTokenConfirm(getConfirm());
   };
 
+  const handleLogout = () => {
+    debugger;
+    logout();
+    handleTokenUpdate();
+  };
+
+  useEffect(() => {
+    console.log("app.js use effectt");
+    handleTokenUpdate();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
-      <Router>
-        <div>
-          <Route exact path="/" component={Login} />
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/contacts" component={Contacts} />
-        </div>
-      </Router>
-    </AuthContext.Provider>
+    <Router>
+      <div>
+        <Header
+          onLogout={handleLogout}
+          username={tokenConfirm && tokenConfirm.username}
+        ></Header>
+        <Route exact path="/" component={Login} />
+
+        <Route
+          path="/login"
+          render={props => (
+            <Login onLoginSuccess={handleTokenUpdate} {...props} />
+          )}
+        />
+
+        <Route path="/signup" component={Signup} />
+        <PrivateRoute path="/contacts" component={Contacts} />
+      </div>
+    </Router>
   );
 }
 
