@@ -10,7 +10,6 @@ const PAGE_SIZE = 20;
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  height: 10%;
 `;
 
 const Avatar = styled.img`
@@ -114,9 +113,7 @@ const ContactDetails = ({ contact, connections }) => {
         <div style={{ minWidth: "300px" }}>
           {contact && <ContactTitle contact={contact} />}
         </div>
-        <div style={{ lineHeight: "3em" }}>
-          <SearchInput searchValue={searchValue} onInputChange={handleSearch} />
-        </div>
+        <SearchInput searchValue={searchValue} onInputChange={handleSearch} />
       </Header>
 
       <div>

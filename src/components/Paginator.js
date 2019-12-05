@@ -11,7 +11,11 @@ const Paginator = ({ onForward, onBackWards, currentPage, totalPages }) => {
       >
         {"<"}
       </SmallButton>
-      {`${currentPage} / ${totalPages}`}
+
+      <span
+        style={{ margin: "0px 12px" }}
+      >{`${currentPage} / ${totalPages}`}</span>
+
       <SmallButton
         onClick={() => {
           onForward();

@@ -16,7 +16,6 @@ function App() {
   };
 
   const handleLogout = () => {
-    debugger;
     logout();
     handleTokenUpdate();
   };

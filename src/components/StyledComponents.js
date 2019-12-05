@@ -39,7 +39,6 @@ const SmallButton = styled.button`
   background: linear-gradient(to bottom, #ff9800, #ffc1074a);
   border-color: none;
   border-radius: 3px;
-  width: 24px;
   height: 18px;
   color: black;
   font-weight: 700;

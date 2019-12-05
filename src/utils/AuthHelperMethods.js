@@ -31,7 +31,6 @@ export function getToken() {
   console.warn(
     "TODO at the moment the token is saved in localstorage, also check isTokenExpired"
   );
-  debugger;
   // Retrieves the user token from localStorage
   return localStorage.getItem("jwt_token");
 }

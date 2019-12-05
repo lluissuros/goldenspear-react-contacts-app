@@ -15,6 +15,7 @@ const Container = styled.div`
 
 const LeftItem = styled.div`
   width: 30%;
+  min-width: 155px;
   max-width: 250px;
   margin: 0px 6px 0px 6px;
 `;

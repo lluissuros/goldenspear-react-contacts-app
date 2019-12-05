@@ -1,10 +1,24 @@
 import React from "react";
+import styled from "styled-components";
+
+// get our fontawesome imports
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const FormRow = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: left;
+`;
 
 const SearchInput = ({ searchValue, onInputChange }) => {
   return (
-    <React.Fragment>
-      <form>
-        <label htmlFor="search">Search:</label>
+    <div>
+      <FormRow>
+        <label htmlFor="search">
+          <FontAwesomeIcon icon={faSearch} style={{ marginRight: "6px" }} />
+        </label>
+
         <input
           type="text"
           name="search"
@@ -12,8 +26,8 @@ const SearchInput = ({ searchValue, onInputChange }) => {
           value={searchValue}
           onChange={e => onInputChange(e.target.value)}
         />
-      </form>
-    </React.Fragment>
+      </FormRow>
+    </div>
   );
 };
 

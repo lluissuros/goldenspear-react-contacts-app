@@ -36,7 +36,6 @@ function Login({ onLoginSuccess }) {
   };
 
   if (loggedIn) {
-    debugger;
     return <Redirect to="/contacts" />;
   }
 
