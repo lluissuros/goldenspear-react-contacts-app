@@ -25,4 +25,4 @@ Get it up and running: `npm start`
 
 * At the moment, the [JSON web token](https://jwt.io/)) coming from authentication is persisted in the localStorage (or the sessionStorage whe the user chooses to not "Remember me"). I think it is not a good solution for security, as anyone could acces there, but it eases up development for the exercise. If the app was meant to be used in production, I would have stored in in an httpOnly cookie.
 
-* At the moment I didn't provide tests. I think they are very important in production, but I just decided to spend my time playing with new features like Hooks or styled components :)
+* At the moment I didn't provide tests. I think they are very important in real life projects, but I just decided to spend my time playing with new features like Hooks or styled components :) But let me know if you want to see my unit testing writing, and I can provide it for you.
