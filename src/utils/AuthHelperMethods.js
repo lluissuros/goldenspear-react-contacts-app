@@ -2,7 +2,7 @@ import decode from "jwt-decode";
 
 export function isLoggedIn() {
   // Checks if there is a saved token and it's still valid
-  const token = getToken(); // Getting token from localstorage
+  const token = getToken();
 
   //The double exclamation is a way to cast the variable to a boolean, allowing you to easily check if the token exusts.
   return !!token && !isTokenExpired(token); // handwaiving here
@@ -16,32 +16,35 @@ function isTokenExpired(token) {
       return true;
     } else return false;
   } catch (err) {
-    console.log("expired check failed!");
+    console.warn("expired check failed! Logging out for security");
+    logout();
     return false;
   }
 }
 
-export function setToken(token) {
-  // Saves user token to localStorage
-  console.warn("TODO at the moment the token is saved in localstorage");
-  localStorage.setItem("jwt_token", token);
+export function setToken(token, rememberMe) {
+  if (rememberMe) {
+    localStorage.setItem("jwt_token", token);
+  } else {
+    sessionStorage.setItem("jwt_token", token);
+    localStorage.removeItem("jwt_token");
+  }
 }
 
 export function getToken() {
-  console.warn(
-    "TODO at the moment the token is saved in localstorage, also check isTokenExpired"
+  return (
+    sessionStorage.getItem("jwt_token") || localStorage.getItem("jwt_token")
   );
-  // Retrieves the user token from localStorage
-  return localStorage.getItem("jwt_token");
 }
 
 export function logout() {
-  // Clear user token and profile data from localStorage
+  // Clear user token and profile data from storage
+  sessionStorage.removeItem("jwt_token");
   localStorage.removeItem("jwt_token");
 }
 
 export function getConfirm() {
   // Using jwt-decode npm package to decode the token
   const token = getToken();
-  return token ? decode(getToken()) : null;
+  return !!token && decode(getToken());
 }

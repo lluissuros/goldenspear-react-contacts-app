@@ -17,10 +17,18 @@ const LogoContainer = styled.div`
   justify-content: center;
 `;
 
-function AuthForm({ error, onConfirm }) {
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-content: left;
+  margin: 3px;
+`;
+
+function AuthForm({ error, onConfirm, btnMessage }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleConfirm = () => {
     onConfirm(userName, password, rememberMe);
@@ -48,8 +56,18 @@ function AuthForm({ error, onConfirm }) {
           }}
           placeholder="password"
         />
-        <Button onClick={() => handleConfirm()}>Log In</Button>
-        <Button onClick={() => console.log("TODO")}>Remember Me</Button>
+
+        <RowContainer>
+          <input
+            style={{ display: "inline" }}
+            type="checkbox"
+            checked={rememberMe}
+            onChange={e => setRememberMe(e.target.checked)}
+          />
+          <span>{"Remember me"}</span>
+        </RowContainer>
+
+        <Button onClick={handleConfirm}>{btnMessage}</Button>
       </Form>
       {error && <Error>{`error message: ${error} `}</Error>}
     </Card>

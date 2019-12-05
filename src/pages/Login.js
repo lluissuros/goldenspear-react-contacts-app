@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
 import { Card } from "../components/StyledComponents";
 import { login } from "../utils/api";
-import { setToken } from "../utils/AuthHelperMethods";
 
 function Login({ onSuccess }) {
   const [error, setError] = useState(null);
@@ -16,10 +15,9 @@ function Login({ onSuccess }) {
         if (!res.token) {
           throw new Error("token was not received");
         }
-        setToken(res.token);
         setError(null);
+        onSuccess(res.token, rememberMe);
         setLoggedIn(true);
-        onSuccess();
       })
       .catch(e => {
         setError(e.message);
@@ -32,7 +30,7 @@ function Login({ onSuccess }) {
 
   return (
     <Card>
-      <AuthForm error={error} onConfirm={handleLogin} />
+      <AuthForm error={error} onConfirm={handleLogin} btnMessage="Log in" />
       <Link to="/signup">Don't have an account?</Link>
     </Card>
   );

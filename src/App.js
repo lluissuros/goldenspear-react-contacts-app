@@ -6,23 +6,29 @@ import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
-import { logout, getConfirm } from "./utils/AuthHelperMethods";
+import { setToken, logout, getConfirm } from "./utils/AuthHelperMethods";
 
 function App() {
   const [tokenConfirm, setTokenConfirm] = useState(null);
 
-  const handleTokenUpdate = () => {
+  const handleAuthSuccess = (token, rememberMe) => {
+    setToken(token, rememberMe);
     setTokenConfirm(getConfirm());
   };
 
   const handleLogout = () => {
+    debugger;
     logout();
-    handleTokenUpdate();
+    setTokenConfirm(getConfirm());
   };
 
   useEffect(() => {
     console.log("app.js use effectt");
-    handleTokenUpdate();
+    try {
+      setTokenConfirm(getConfirm());
+    } catch {
+      logout();
+    }
   }, []);
 
   return (
@@ -39,19 +45,19 @@ function App() {
             <Route
               path="/login"
               render={props => (
-                <Login onSuccess={handleTokenUpdate} {...props} />
+                <Login onSuccess={handleAuthSuccess} {...props} />
               )}
             />
             <Route
               path="/signup"
               render={props => (
-                <Signup onSuccess={handleTokenUpdate} {...props} />
+                <Signup onSuccess={handleAuthSuccess} {...props} />
               )}
             />
             <PrivateRoute path="/contacts" component={Contacts} />
             <Route
               render={props => (
-                <Login onLoginSuccess={handleTokenUpdate} {...props} />
+                <Login onSuccess={handleAuthSuccess} {...props} />
               )}
             />
           </Switch>
