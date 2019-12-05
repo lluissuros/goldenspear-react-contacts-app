@@ -1,25 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logoImg from "../img/logo_goldenspear.jpg";
-import {
-  Card,
-  Logo,
-  Form,
-  Input,
-  Button
-} from "../components/StyledComponents";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import AuthForm from "../components/AuthForm";
+import { Card } from "../components/StyledComponents";
+import { signup } from "../utils/api";
+import { setToken } from "../utils/AuthHelperMethods";
 
-function Signup() {
+function Signup({ onSuccess }) {
+  const [error, setError] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleSignup = (userName, password, rememberMe) => {
+    //create a new user and pass on server
+    signup(userName, password)
+      .then(res => {
+        if (!res.token) {
+          throw new Error("token was not received");
+        }
+        setToken(res.token);
+        setError(null);
+        setLoggedIn(true);
+        onSuccess();
+      })
+      .catch(e => {
+        setError(e.message);
+      });
+  };
+
+  if (loggedIn) {
+    return <Redirect to="/contacts" />;
+  }
+
   return (
     <Card>
-      <Logo src={logoImg} />
-      <Form>
-        <Input type="email" placeholder="email" />
-        <Input type="password" placeholder="password" />
-        <Input type="password" placeholder="password again" />
-        <Button>Sign Up (not available yet)</Button>
-      </Form>
-      <Link to="/login">Already have an account?</Link>
+      <AuthForm error={error} onConfirm={handleSignup} />
+      <Link to="/login"> Have an account already?</Link>
     </Card>
   );
 }

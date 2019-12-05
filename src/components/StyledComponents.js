@@ -54,7 +54,8 @@ const SmallButton = styled.button`
 `;
 
 const Logo = styled.img`
-  width: 50%;
+  height: 150px;
+  width: 150px;
   margin-bottom: 1rem;
   border-radius: 6px;
 `;

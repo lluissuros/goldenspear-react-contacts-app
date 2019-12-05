@@ -14,6 +14,17 @@ export function login(username, password) {
   });
 }
 
+export function signup(username, password) {
+  // Get a token from api server using the fetch api
+  return makeAuthenticatedRequest(SIGNUP_URL, null, {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      password
+    })
+  });
+}
+
 export function getContacts(tocken) {
   return makeAuthenticatedRequest(CONTACTS_URL, tocken, {
     method: "GET"

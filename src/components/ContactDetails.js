@@ -45,7 +45,6 @@ const ConnectionsListContainer = styled.ul`
   font-weight: 300;
   text-align: center;
   height: 370px;
-  overflow-y: scroll;
 `;
 
 const ConnectionCardItem = styled.li`
@@ -120,7 +119,7 @@ const ContactDetails = ({ contact, connections }) => {
         <hr />
       </div>
 
-      <section>
+      <section style={{ overflowY: "scroll" }}>
         <ConnectionsListContainer>
           {filteredConnections &&
             paginate(filteredConnections, browserPage, PAGE_SIZE).map(

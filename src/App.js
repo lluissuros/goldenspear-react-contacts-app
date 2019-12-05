@@ -39,10 +39,15 @@ function App() {
             <Route
               path="/login"
               render={props => (
-                <Login onLoginSuccess={handleTokenUpdate} {...props} />
+                <Login onSuccess={handleTokenUpdate} {...props} />
               )}
             />
-            <Route path="/signup" component={Signup} />
+            <Route
+              path="/signup"
+              render={props => (
+                <Signup onSuccess={handleTokenUpdate} {...props} />
+              )}
+            />
             <PrivateRoute path="/contacts" component={Contacts} />
             <Route
               render={props => (

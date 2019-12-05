@@ -1,24 +1,15 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import logoImg from "../img/logo_goldenspear.jpg";
-import {
-  Card,
-  Logo,
-  Form,
-  Input,
-  Button,
-  Error
-} from "../components/StyledComponents";
-import { login } from "../utils/api"; //TODO: use postLogin later
+import AuthForm from "../components/AuthForm";
+import { Card } from "../components/StyledComponents";
+import { login } from "../utils/api";
 import { setToken } from "../utils/AuthHelperMethods";
 
-function Login({ onLoginSuccess }) {
+function Login({ onSuccess }) {
   const [error, setError] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = (userName, password, rememberMe) => {
     /* Here is where all the login logic will go. Upon clicking the login button, we would like to utilize a login method that will send our entered credentials over to the server for verification. Once verified, it should store your token and send you to the protected route. */
     login(userName, password)
       .then(res => {
@@ -28,7 +19,7 @@ function Login({ onLoginSuccess }) {
         setToken(res.token);
         setError(null);
         setLoggedIn(true);
-        onLoginSuccess();
+        onSuccess();
       })
       .catch(e => {
         setError(e.message);
@@ -41,29 +32,8 @@ function Login({ onLoginSuccess }) {
 
   return (
     <Card>
-      <Logo src={logoImg} />
-      <Form>
-        <Input
-          type="username"
-          value={userName}
-          onChange={e => {
-            setUserName(e.target.value);
-          }}
-          placeholder="email"
-        />
-        <Input
-          type="password"
-          value={password}
-          onChange={e => {
-            setPassword(e.target.value);
-          }}
-          placeholder="password"
-        />
-        <Button onClick={() => handleLogin()}>Log In</Button>
-        <Button onClick={() => console.log("TODO")}>Remember Me</Button>
-      </Form>
+      <AuthForm error={error} onConfirm={handleLogin} />
       <Link to="/signup">Don't have an account?</Link>
-      {error && <Error>{`error message: ${error} `}</Error>}
     </Card>
   );
 }
