@@ -20,6 +20,7 @@ const SearchInput = ({ searchValue, onInputChange }) => {
         </label>
 
         <input
+          style={{ outline: "none" }}
           type="text"
           name="search"
           placeholder="by contains"

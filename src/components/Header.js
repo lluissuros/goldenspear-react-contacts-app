@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { SmallButton } from "./StyledComponents";
 
 const Container = styled.header`
-  margin: 6px 12px 12px 3px;
+  margin: 12px 24px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const Header = ({ username, onLogout }) => {
