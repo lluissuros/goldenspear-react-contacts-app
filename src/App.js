@@ -17,13 +17,11 @@ function App() {
   };
 
   const handleLogout = () => {
-    debugger;
     logout();
     setTokenConfirm(getConfirm());
   };
 
   useEffect(() => {
-    console.log("app.js use effectt");
     try {
       setTokenConfirm(getConfirm());
     } catch {
@@ -41,7 +39,6 @@ function App() {
       <Router>
         <div>
           <Switch>
-            <Route path="/" exact component={Login} />
             <Route
               path="/login"
               render={props => (

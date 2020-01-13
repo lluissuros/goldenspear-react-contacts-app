@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:3001";
+// const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://sleepy-crag-96928.herokuapp.com";
 const LOGIN_URL = `${BASE_URL}/users/login`;
 const SIGNUP_URL = `${BASE_URL}/users/signup`;
 const CONTACTS_URL = `${BASE_URL}/contacts`;
@@ -42,7 +43,7 @@ function makeAuthenticatedRequest(url, token, options) {
   if (token) {
     headers["Authorization"] = "Bearer " + token;
   }
-
+  debugger;
   return fetch(url, {
     headers,
     ...options
