@@ -1,10 +1,16 @@
+### The corresponding back-end can be found [here](https://github.com/lluissuros/goldenspear-simple-backend)
+
+### Live deploy in [here](https://goldenspear-react-contacts-app.lluissuros.now.sh/)
+
+
+
 # goldenspear-react-contacts-app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
 
-##### The corresponding back-end can be found [here](https://github.com/lluissuros/goldenspear-simple-backend)
+
 
 
 ### How to use
